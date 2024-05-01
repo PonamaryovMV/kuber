@@ -1,0 +1,27 @@
+apiVersion: apps/v1  # Версия API для создания объектов Deployment.
+kind: Deployment  # Тип объекта, который мы создаем - Deployment.
+metadata:
+  name: kuber  # Имя Deployment.
+  labels:
+    app: kuber  # Метка, присвоенная Deployment.
+spec:
+  replicas: 5  # Желаемое количество реплик (подов).
+  minReadySeconds: 10  # Минимальное количество секунд, в течение которых Pod должен быть готов перед тем, как он будет считаться готовым.
+  strategy:
+    rollingUpdate:  # Стратегия развертывания - пошаговое обновление.
+      maxSurge: 1  # Максимальное количество дополнительных подов, которые могут быть созданы сверх желаемого количества во время обновления.
+      maxUnavailable: 1  # Максимальное количество подов, которые могут быть недоступны во время обновления.
+    type: RollingUpdate  # Тип стратегии развертывания - пошаговое обновление.
+  selector:
+    matchLabels:
+      app: http-server  # Селектор, который выбирает поды с меткой "app: http-server".
+  template:  # Шаблон для создания подов, управляемых Deployment.
+    metadata:
+      labels:
+        app: http-server  # Метка, присвоенная подам, созданным из этого шаблона.
+    spec:
+      containers:
+      - name: kuber-app  # Имя контейнера.
+        image: bokovets/kuber:v2.0  # Образ контейнера для запуска в поде.
+        ports:
+        - containerPort: 8000  # Порт, который контейнер будет прослушивать.

@@ -1,19 +1,19 @@
-apiVersion: apps/v1
-kind: ReplicaSet
+apiVersion: apps/v1  # Версия API для создания объектов ReplicaSet.
+kind: ReplicaSet  # Тип объекта, который мы создаем - ReplicaSet.
 metadata:
-  name: kuber-rs-1
+  name: kuber-rs-1  # Имя ReplicaSet.
   labels:
-    app: kuber-rs
+    app: kuber-rs  # Метка, присвоенная ReplicaSet.
 spec:
-  replicas: 3
+  replicas: 3  # Желаемое количество реплик (подов).
   selector:
     matchLabels:
-      env: dev
-  template:
+      env: dev  # Селектор, который выбирает поды с меткой "env: dev".
+  template:  # Шаблон для создания подов, управляемых ReplicaSet.
     metadata:
       labels:
-        env: dev
+        env: dev  # Метка, присвоенная подам, созданным из этого шаблона.
     spec:
       containers:
-      - name: kuber-app
-        image: bokovets/kuber
+      - name: kuber-app  # Имя контейнера.
+        image: bokovets/kuber  # Образ контейнера для запуска в поде.

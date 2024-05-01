@@ -1,13 +1,15 @@
-apiVersion: v1
-kind: Pod
-metadata: 
-  name: app-kuber-2
-  labels:
-    enviroment: dev
-    app: http-server
-spec:
-  containers:
-  - name: app-kuber-container
-    image: nginx:latest
-    ports:
-    - containerPort: 80
+apiVersion: v1 #версия API 
+kind: Pod #какой объект описываем
+metadata:   #дополнительные данные поду
+  name: app-kuber-2 #имя пода
+  labels:           #метки для пода 
+    enviroment: dev   #метка
+    app: http-server  #метка
+spec: #спецификация
+  nodeSelector: #указываем метку ноды на которой должен запускаться под
+    gpu: "true" #описание самой метки
+  containers:   #описание контейнера 
+  - name: app-kuber-container #имя контейнера
+    image: nginx:latest #образ контейнера
+    ports:  #открываем порта 
+    - containerPort: 80 #указываем порты 

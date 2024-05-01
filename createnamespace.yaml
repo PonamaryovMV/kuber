@@ -1,0 +1,7 @@
+apiVersion: v1 #версия API 
+kind: Namespace #какой объект описываем
+metadata:   #дополнительные данные namespace
+  name: newnamespace #имя namespace
+  labels:           #метки  
+    enviroment: dev   #метка
+    app: http-server  #метка

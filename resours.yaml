@@ -1,0 +1,47 @@
+Apiversion: apps/v1
+Kind: DEPLOYMENT  
+Metadata::
+   Name: my-replicaset 
+Spec:
+  Replicas: 2   количетсов реплик приложения
+  Selector: 
+    Matchlabels:
+       App: my-app  указываем какими подам с каким лейблом управлять 
+  Strategy:     - описываем стратегую обновления есть rolingupdate( поочереди обновляе) и regret (убивает старое запускае  новое) 
+     Rolingupdate:
+       Maxsurge: 1                 какое количество реплик можем увеличиться (можно указывать в %)
+       Maxunavavailable: 1    на какое количество можем уменьшиться
+  Template: 
+    Matadata:
+        Labels:
+            App: my-app   какой лейбл пода будет 
+    Spec:
+       Containers:
+            - image:  nginx:1.12
+               Name: nginx
+               Ports: 
+                  - containerport: 80
+               readinessprobe:      проверяет готово ли приложение принимать трафик
+                  failurethreshold : 3  количества неудачь 
+                  Httpget:  используем метод гет еще есть exec( описываем какую команду кнутри контейнера нужно выполнить. Вторая tcp ( проверка порта)
+                      Path: /
+                      port: 80
+                  Periodseconds: 10   как чассто проверка 
+                  Successthreshold: 1   счетчик сброса неудачных проверок 
+                  Timeoutseconds: 1   время на выполнение пробы
+               Livenessprobe:
+                  failurethreshold : 3
+                  Httpget:
+                      Path: /
+                      port: 80
+                  Periodseconds: 10
+                  Successthreshold: 1
+                  Timeoutseconds: 1
+                  Initialdelayseconds: 10      первую пробу нужно через 10 секунд
+                Resources:
+                   Requests:
+                      Cpu: 50m      в процессорном времени
+                      Memory: 100mi
+                  Limits:
+                      Cpu: 100m
+                      Memory: 100mi

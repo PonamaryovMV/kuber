@@ -22,6 +22,6 @@ spec:
     spec:
       containers:
       - name: kuber-app  # Имя контейнера.
-        image: bokovets/kuber:v2.0  # Образ контейнера для запуска в поде.
+        image: nginx  # Образ контейнера для запуска в поде.
         ports:
         - containerPort: 8000  # Порт, который контейнер будет прослушивать.
